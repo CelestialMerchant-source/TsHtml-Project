@@ -1,0 +1,22 @@
+{
+  "name": "bayt-islahe",
+  "version": "1.0.0",
+  "description": "Islamic blog — Quran, Hadith, Prophetic Medicine, Natural Medicine",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "seed": "node seed.js",
+    "dev": "node app.js"
+  },
+  "keywords": ["islamic", "blog", "quran", "hadith"],
+  "author": "MerchantX Media",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "marked": "^18.0.2",
+    "slugify": "^1.6.9"
+  }
+}

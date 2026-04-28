@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{formTitle}} — Bayt Islahe Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar__logo" href="/admin/dashboard">
+      <div class="sidebar__logo-icon">🕌</div>
+      <div class="sidebar__logo-text">Bayt Islahe<span>Admin Panel</span></div>
+    </a>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">Content</div>
+      <a href="/admin/dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="/admin/posts/new" class="active"><span class="nav-icon">✏️</span> New Post</a>
+      <a href="/admin/posts"><span class="nav-icon">📋</span> All Posts</a>
+      <div class="sidebar__section-label">Account</div>
+      <a href="/admin/settings"><span class="nav-icon">⚙️</span> Settings</a>
+      <a href="/" target="_blank"><span class="nav-icon">🌐</span> View Blog</a>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__avatar">A</div>
+        <span class="sidebar__username">{{username}}</span>
+      </div>
+      <a href="/admin/logout" class="sidebar__logout">Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>{{formTitle}}</h1>
+      <div class="admin-topbar__actions">
+        <a href="/admin/posts" class="btn btn-secondary">← All Posts</a>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      {{alert}}
+
+      <form method="POST" action="/admin/posts/{{formAction}}">
+        <input type="hidden" name="_method" value="POST">
+
+        <div class="editor-layout">
+          <!-- Main Editor -->
+          <div>
+            <div class="card">
+              <div class="card__body">
+                <div class="form-group">
+                  <label class="form-label" for="title">Post Title *</label>
+                  <input class="form-control form-control-lg" type="text" id="title" name="title" value="{{titleVal}}" placeholder="Enter a clear, descriptive title..." required oninput="autoSlug(this.value)">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="slug">URL Slug</label>
+                  <input class="form-control" type="text" id="slug" name="slug" value="{{slugVal}}" placeholder="auto-generated-from-title">
+                  <p class="form-hint">Leave empty to auto-generate from title. Only lowercase letters, numbers, and hyphens.</p>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="content">Content * <span style="font-weight:400;color:var(--ink-light)">(Markdown supported)</span></label>
+                  <textarea class="form-control" id="content" name="content" placeholder="Write your post content here... You can use **bold**, *italic*, ## headings, > blockquotes, and more.
+
+Example:
+## In the Name of Allah
+
+> *Recite in the name of your Lord who created* — Quran 96:1
+
+This is a paragraph with **bold text** and *italic text*...">{{contentVal}}</textarea>
+                  <p class="form-hint">Use Markdown: **bold**, *italic*, ## Heading 2, ### Heading 3, > blockquote, - bullet list</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="editor-sidebar">
+            <div class="card" style="margin-bottom:16px">
+              <div class="card__header"><h2>Publish</h2></div>
+              <div class="card__body">
+                <div class="form-group">
+                  <label class="form-label" for="status">Status</label>
+                  <select class="form-control" id="status" name="status">
+                    <option value="published" {{isPublished}}>Published</option>
+                    <option value="draft" {{isDraft}}>Draft</option>
+                  </select>
+                </div>
+                <div class="editor-actions">
+                  <button type="submit" class="btn btn-primary" style="justify-content:center">💾 Save Post</button>
+                  <button type="submit" onclick="document.getElementById('status').value='draft'" class="btn btn-secondary" style="justify-content:center">Save as Draft</button>
+                  <button type="submit" onclick="document.getElementById('status').value='published'" class="btn btn-gold" style="justify-content:center">🚀 Publish Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+              <div class="card__header"><h2>Category *</h2></div>
+              <div class="card__body">
+                <select class="form-control" name="category" required>
+                  {{catOptions}}
+                </select>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card__header"><h2>SEO</h2></div>
+              <div class="card__body">
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="form-label" for="metaDesc">Meta Description</label>
+                  <textarea class="form-control" id="metaDesc" name="metaDesc" style="min-height:100px;font-family:var(--font-sans);font-size:0.875rem" placeholder="Brief description for search engines (150-160 chars recommended)..." maxlength="200">{{metaDescVal}}</textarea>
+                  <p class="form-hint" id="metaCount">0 / 160 characters</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Auto-generate slug from title
+  function autoSlug(val) {
+    const slugInput = document.getElementById('slug');
+    if (slugInput.dataset.manual) return;
+    slugInput.value = val.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  }
+
+  // Mark slug as manually edited
+  document.getElementById('slug').addEventListener('input', function() {
+    this.dataset.manual = 'true';
+  });
+
+  // Meta desc char count
+  const metaDesc = document.getElementById('metaDesc');
+  const metaCount = document.getElementById('metaCount');
+  function updateCount() {
+    const len = metaDesc.value.length;
+    metaCount.textContent = len + ' / 160 characters';
+    metaCount.style.color = len > 160 ? '#D32F2F' : 'var(--ink-light)';
+  }
+  metaDesc.addEventListener('input', updateCount);
+  updateCount();
+</script>
+</body>
+</html>

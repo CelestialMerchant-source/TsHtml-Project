@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search — {{siteName}}</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="site-logo">
+      <div class="site-logo__icon">🕌</div>
+      <div>
+        <div class="site-logo__text">{{siteName}}</div>
+        <span class="site-logo__sub">بيت الإصلاح</span>
+      </div>
+    </a>
+    <nav class="header-nav" id="mainNav">
+      <a href="/">Home</a>
+      <a href="/category/Quran">Quran</a>
+      <a href="/category/Hadith">Hadith</a>
+      <a href="/category/Do's%20and%20Don'ts">Do's & Don'ts</a>
+      <a href="/category/Prophetic%20Medicine">Prophetic Medicine</a>
+      <a href="/category/Natural%20Medicine">Natural Medicine</a>
+    </nav>
+    <button class="hamburger" onclick="document.getElementById('mainNav').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<div class="search-hero">
+  <div class="container">
+    <h1>Search</h1>
+    <p>{{resultCount}} results for "{{query}}"</p>
+    <form class="search-form-lg" action="/search" method="GET">
+      <input type="text" name="q" value="{{query}}" placeholder="Search articles...">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<main class="container">
+  <section class="section">
+    <div class="posts-grid">
+      {{postGrid}}
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2024 Bayt Islahe — <a href="/" style="color:var(--gold-light)">Return Home</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

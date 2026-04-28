@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Bayt Islahe Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar__logo" href="/admin/dashboard">
+      <div class="sidebar__logo-icon">🕌</div>
+      <div class="sidebar__logo-text">Bayt Islahe<span>Admin Panel</span></div>
+    </a>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">Content</div>
+      <a href="/admin/dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="/admin/posts/new"><span class="nav-icon">✏️</span> New Post</a>
+      <a href="/admin/posts"><span class="nav-icon">📋</span> All Posts</a>
+      <div class="sidebar__section-label">Account</div>
+      <a href="/admin/settings" class="active"><span class="nav-icon">⚙️</span> Settings</a>
+      <a href="/" target="_blank"><span class="nav-icon">🌐</span> View Blog</a>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__avatar">A</div>
+        <span class="sidebar__username">{{username}}</span>
+      </div>
+      <a href="/admin/logout" class="sidebar__logout">Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Settings</h1>
+    </div>
+
+    <div class="admin-content">
+      {{alert}}
+
+      <div style="max-width:520px">
+        <div class="card">
+          <div class="card__header"><h2>Change Password</h2></div>
+          <div class="card__body">
+            <form method="POST" action="/admin/settings">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input class="form-control" type="password" name="currentPass" required placeholder="Enter current password">
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input class="form-control" type="password" name="newPass" required placeholder="Minimum 6 characters" minlength="6">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input class="form-control" type="password" name="confirmPass" required placeholder="Repeat new password">
+              </div>
+              <button type="submit" class="btn btn-primary">Update Password</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__header"><h2>Account Info</h2></div>
+          <div class="card__body">
+            <p style="font-size:0.9rem;color:var(--ink-muted)">Logged in as: <strong>{{username}}</strong></p>
+            <p style="font-size:0.875rem;color:var(--ink-light);margin-top:8px">To change your username, edit the <code>data/users.json</code> file directly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

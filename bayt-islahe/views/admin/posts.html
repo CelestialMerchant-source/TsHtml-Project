@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Posts — Bayt Islahe Admin</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar__logo" href="/admin/dashboard">
+      <div class="sidebar__logo-icon">🕌</div>
+      <div class="sidebar__logo-text">Bayt Islahe<span>Admin Panel</span></div>
+    </a>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">Content</div>
+      <a href="/admin/dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="/admin/posts/new"><span class="nav-icon">✏️</span> New Post</a>
+      <a href="/admin/posts" class="active"><span class="nav-icon">📋</span> All Posts</a>
+      <div class="sidebar__section-label">Account</div>
+      <a href="/admin/settings"><span class="nav-icon">⚙️</span> Settings</a>
+      <a href="/" target="_blank"><span class="nav-icon">🌐</span> View Blog</a>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__avatar">A</div>
+        <span class="sidebar__username">{{username}}</span>
+      </div>
+      <a href="/admin/logout" class="sidebar__logout">Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>All Posts <span style="font-size:0.9rem;color:var(--ink-light);font-family:var(--font-sans);font-weight:400">({{postCount}})</span></h1>
+      <div class="admin-topbar__actions">
+        <a href="/admin/posts/new" class="btn btn-primary">+ New Post</a>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- Filters -->
+      <form class="filters-bar" method="GET" action="/admin/posts">
+        <select name="category" onchange="this.form.submit()">
+          {{catOptions}}
+        </select>
+        <select name="status" onchange="this.form.submit()">
+          {{statusOptions}}
+        </select>
+        <input type="text" name="search" value="{{searchVal}}" placeholder="Search posts..." style="min-width:200px">
+        <button type="submit" class="btn btn-secondary">Filter</button>
+        <a href="/admin/posts" class="btn btn-secondary">Reset</a>
+      </form>
+
+      <div class="card">
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>{{postsRows}}</tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

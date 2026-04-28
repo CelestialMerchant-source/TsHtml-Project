@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Bayt Islahe</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo__icon">🕌</div>
+      <h1>Bayt Islahe</h1>
+      <p>Admin Panel — Sign In</p>
+    </div>
+
+    {{error}}
+
+    <form method="POST" action="/admin/login">
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control form-control-lg" type="text" id="username" name="username" placeholder="admin" required autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Sign In</button>
+    </form>
+
+    <p style="text-align:center;margin-top:20px;font-size:0.8rem;color:var(--ink-light);">
+      <a href="/" style="color:var(--sage);">← Back to Blog</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
